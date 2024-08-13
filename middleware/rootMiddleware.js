@@ -10,10 +10,10 @@ const rootMiddleware = (app) => {
 
     //file upload middleware
     app.use(fileUpload(
-        // {
-        //     useTempFiles: true,
-        //     tempFileDir: '/temp/'
-        // }
+        {
+            useTempFiles: true,
+            tempFileDir: './temp/'
+        }
     ));
 
 
