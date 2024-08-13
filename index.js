@@ -131,6 +131,7 @@ app.post('/chat-message', async (req, res) => {
         res.status(200).json({ message: 'Message sent successfully' });
         const file = await req?.files?.file;
         const data = await JSON.parse(req.body.data);
+        console.log(file);
         if (room[data?.room]?.length > 0) {
             let newChat = await data
             if (file) {
