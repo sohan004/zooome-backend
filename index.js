@@ -135,8 +135,8 @@ app.post('/chat-message', async (req, res) => {
         if (room[data?.room]?.length > 0) {
             let newChat = await data
             if (file) {
-                const fileName = await fileUpload(file, data?.room);
-                newChat['file'] = fileName;
+                // const fileName = await fileUpload(file, data?.room);
+                newChat['file'] = file.data;
             }
             await io.in(data?.room).emit('chat-message', data);
         }
@@ -146,25 +146,25 @@ app.post('/chat-message', async (req, res) => {
 });
 
 
-app.get('/media', async (req, res) => {
-    try {
-        const { name, room } = await req.query;
-        const rootDir = await path.join(__dirname, `./media/${room}`);
-        const filePath = await path.join(rootDir, name);
-        if (await !fs.existsSync(filePath)) {
-            return res.status(404).json({ message: 'File not found' });
-        }
+// app.get('/media', async (req, res) => {
+//     try {
+//         const { name, room } = await req.query;
+//         const rootDir = await path.join(__dirname, `./media/${room}`);
+//         const filePath = await path.join(rootDir, name);
+//         if (await !fs.existsSync(filePath)) {
+//             return res.status(404).json({ message: 'File not found' });
+//         }
 
-        const mimeType = mime.lookup(filePath);
-        res.setHeader('Content-Type', mimeType);
+//         const mimeType = mime.lookup(filePath);
+//         res.setHeader('Content-Type', mimeType);
 
-        const stream = await fs.createReadStream(filePath);
-        await stream.pipe(res);
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
+//         const stream = await fs.createReadStream(filePath);
+//         await stream.pipe(res);
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json({ error: 'Internal server error' });
+//     }
+// });
 
 
 
