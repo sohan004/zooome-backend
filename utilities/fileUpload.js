@@ -6,7 +6,9 @@ const fileUpload = (file, roomName) => {
         try {
             const roomPath = await path.join(__dirname, `../media/${roomName}`);
             if (!fs.existsSync(roomPath)) {
-                fs.mkdirSync(roomPath);
+                fs.mkdirSync(roomPath, {
+                    recursive: true,
+                });
             }
             const uniqRandomNumber = await Math.floor(Math.random() * 10000000000);
             const currentDate = await Date.now()
